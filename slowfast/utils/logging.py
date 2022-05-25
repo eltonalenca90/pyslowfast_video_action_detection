@@ -10,7 +10,7 @@ import functools
 import logging
 import os
 import sys
-import simplejson
+import json as simplejson
 
 import slowfast.utils.distributed as du
 from slowfast.utils.env import pathmgr
