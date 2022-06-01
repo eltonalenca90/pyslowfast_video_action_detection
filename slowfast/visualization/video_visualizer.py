@@ -63,7 +63,7 @@ class ImgVisualizer(Visualizer):
         text,
         position,
         *,
-        font_size=None,
+        font_size=1,
         color="w",
         horizontal_alignment="center",
         vertical_alignment="bottom",
@@ -464,9 +464,17 @@ class VideoVisualizer:
                     ground_truth=ground_truth,
                 )
             )
+        #write the each image path into the input file 
+        input_path = '/content/text_labels_pred.txt'
+        f= open(input_path,"a")
+        for i in range(len(text_labels)):
+            f.write("{person" + str(i) + ":" + str(text_labels[i]) + '}\n')
+            #print('##################here############')
+        f.close()  
+
         frame_visualizer = ImgVisualizer(frame, meta=None)
-        font_size = min(
-            max(np.sqrt(frame.shape[0] * frame.shape[1]) // 35, 5), 9
+        font_size = max(
+            max(np.sqrt(frame.shape[0] * frame.shape[1]) // 50, 5), 9
         )
         top_corner = not ground_truth
         if bboxes is not None:
