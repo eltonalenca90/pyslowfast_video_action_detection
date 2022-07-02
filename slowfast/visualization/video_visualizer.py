@@ -28,6 +28,13 @@ def _create_text_labels(classes, scores, class_names, ground_truth=False):
     """
     try:
         labels = [class_names[i] for i in classes]
+        #write the each image path into the input file 
+        input_path = '/content/text_labels_pred.csv'
+        f= open(input_path,"a")
+        for i in classes:
+            f.write(str(class_names[i]) + '\n')
+        f.close() 
+
     except IndexError:
         logger.error("Class indices get out of range: {}".format(classes))
         return None
@@ -464,14 +471,7 @@ class VideoVisualizer:
                     ground_truth=ground_truth,
                 )
             )
-        #write the each image path into the input file 
-        input_path = '/content/text_labels_pred.txt'
-        f= open(input_path,"a")
-        for i in range(len(text_labels)):
-            f.write("{person" + str(i) + ":" + str(text_labels[i]) + '}\n')
-            #print('##################here############')
-        f.close()  
-
+        
         frame_visualizer = ImgVisualizer(frame, meta=None)
         font_size = max(
             max(np.sqrt(frame.shape[0] * frame.shape[1]) // 50, 5), 9
